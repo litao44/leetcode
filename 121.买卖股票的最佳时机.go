@@ -10,11 +10,17 @@ func maxProfit(prices []int) int {
 		return 0
 	}
 
-	dp := make([]int, len(prices))
-	for i := 0; i < len(prices); i++ {
-
+	var maxProfit = 0
+	var minPrice = 1 << 16
+	for _, price := range prices {
+		if price < minPrice {
+			minPrice = price
+		} else if price-minPrice > maxProfit {
+			maxProfit = price - minPrice
+		}
 	}
 
+	return maxProfit
 }
 
 // @lc code=end
