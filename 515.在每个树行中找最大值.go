@@ -14,18 +14,45 @@
  * }
  */
 func largestValues(root *TreeNode) []int {
-	res := make([]int, 0, 1)
-	helper(root, 0, res)
-	return res
+	return recursion(root)
 }
 
-func helper(root *TreeNode, depth int, res []int) {
+func recursion(root *TreeNode) []int {
+	m := map[int]int{}
+	recursionHelper(root, m, 0)
+
+	result := make([]int, len(m))
+	for key, val := range m {
+		result[key] = val
+	}
+
+	return result
+}
+
+func recursionHelper(root *TreeNode, result map[int]int, curentDepth int) {
 	if root == nil {
 		return
 	}
 
-	currentDepth := depth + 1
+	if _, ok := result[curentDepth]; !ok {
+		result[curentDepth] = root.Val
+	} else {
+		result[curentDepth] = max(result[curentDepth], root.Val)
+	}
 
+	recursionHelper(root.Right, result, curentDepth+1)
+	recursionHelper(root.Left, result, curentDepth+1)
+}
+
+func bfs(root *TreeNode) []int {
+	return nil
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
 
 // @lc code=end
